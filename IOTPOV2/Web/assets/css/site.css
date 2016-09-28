@@ -1,0 +1,173 @@
+﻿@charset "utf-8";
+body {
+    font-size: 13px;
+}
+#footer {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+.navbar-brand>img {
+    height: 46px;
+    margin-top: 2px;
+}
+.navbar-nav>li>.dropdown-menu>li>a {
+    padding: 6px 20px;
+}
+.page-body {
+    margin-top: 10px;
+}
+.panel-search {
+    position: absolute;
+    left: 100px;
+    top: 3px;
+}
+.panel-search .input-group + .input-group {
+    margin-left: 100px;
+}
+.panel-search .btn {
+    font-size: 12px;
+}
+.panel-search .form-control {
+    height: 30px;
+    font-size: 12px;
+    padding: 5px 8px;
+}
+.panel-option .btn {
+    min-width: 80px;
+}
+.panel-option .btn + .btn {
+    margin-left: 20px;
+}
+.form-control.datepicker ,.form-control.trPiont{
+    padding: 6px;
+    display: inline-block;
+    width: 45%;
+}
+.query-result {
+    margin-top: 10px;
+}
+.input-group-search {
+    width: 200px;
+}
+li.list-group-item:hover {
+    cursor: pointer;
+    color: #555;
+    text-decoration: none;
+}
+.list-group-item-opt {
+    float: right;
+    display: none;
+}
+.list-group-item:hover .list-group-item-opt {
+    display: block;
+}
+.list-group-item-opt .glyphicon:hover {
+    color: red;
+}
+.table-option {
+    margin-bottom: 10px;
+}
+.table-header-gray.table > thead > tr > th {
+    background-color: #efefef;
+    border-top: 1px solid #ddd !important;
+}
+.main-option {
+    margin: 20px 0;
+    text-align: right;
+}
+.main-option .btn {
+    min-width: 80px;
+}
+.main-option .btn + .btn {
+    margin-left: 10px;
+}
+.table-custom > thead > tr {
+    background-color: #4BACC6;
+    color: #fff;
+}
+.radio-group > label,
+.checkbox-group > label {
+    font-weight: normal;
+}
+.radio-group > label,
+.checkbox-group > label {
+    margin-right: 10px;
+}
+.item-control textarea {
+    height: 80px;
+}
+.reason-item + .reason-item  {
+    margin-top: 10px;
+}
+.reason-zrr {
+    padding: 8px 0;
+}
+.statement-list li {
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #ddd;
+}
+.statement-list li + li {
+    margin-top: 10px;
+}
+.statement-text {
+    margin-bottom: 10px;
+}
+.statement-extra {
+    text-align: right;
+}
+.statement-extra-item {
+    display: inline-block;
+}
+.statement-extra-item + .statement-extra-item {
+    margin-left: 20px;
+}
+.dis-none {
+    display: none;
+}
+.approve-history {
+    margin-top: 20px;
+}
+.layer-form .item {
+    width: 90%;
+}
+.defect-state + .defect-state {
+    margin-left: 20px;
+}
+.defect-state .glyphicon {
+    margin-right: 5px;
+}
+.defect-state .glyphicon-ok-circle {
+    color: green;
+}
+.search-result {
+    height: 30px;
+    color: #808080;
+    margin-left: -5px;
+}
+.block {
+    margin-top: 10px;
+}
+.block-title {
+    border-bottom: 1px solid #428bca;
+}
+.block-title span {
+    padding: 5px 20px;
+    display: inline-block;
+    background-color: #428bca;
+    color: #fff;
+}
+.block-content {
+    margin: 15px 0;
+}
+.block .caption {
+    font-size: 20px;
+    text-align: center;
+    font-family: '黑体';
+    }
+table td {
+    word-wrap: break-word;
+    max-width: 325px;
+}
+.reason-desc {
+    word-break: break-all;
+}

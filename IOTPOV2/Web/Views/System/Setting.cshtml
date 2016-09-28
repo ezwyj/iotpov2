@@ -1,0 +1,158 @@
+﻿
+@using NPI.Account.Entity;
+@using NPI.ValueSet.Entity;
+@{
+    ViewBag.Title = "系统设置";
+    List<ValueSetEntity> setList = (List<ValueSetEntity>)ViewBag.setList;
+    string rightName = (string)ViewBag.rightName;
+}
+
+<div class="container page-body system-setting">
+    @if (rightName.Contains("权限设置"))
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5>权限设置</h5>
+            </div>
+            <div class="panel-body">
+                <div class="option-pane">
+                    <div class="pull-right">
+                        <div class="input-group input-group-search">
+                            <div class="input-group-btn">
+                                <button class="btn btn-warning" id="searchRight-btn">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control" id="searchRight" placeholder="姓名/工号">
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary" id="addUserRight">增加权限</button>
+                    <button class="btn btn-sm btn-danger" id="deleteUserRight">删除权限</button>
+                </div>
+                <div id="userRightList"></div>
+            </div>
+        </div>
+    }
+    @if (rightName.Contains("值集维护"))
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5>值集维护</h5>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <ul class="list-group" id="setList">
+                            @foreach (var set in setList)
+                            {
+                                <li class="list-group-item" data-id="@set.Id">
+                                    <span class="list-group-item-opt">
+                                        <i class="glyphicon glyphicon-cog" title="设置"></i>
+                                        <i class="glyphicon glyphicon-remove" title="删除"></i>
+                                    </span>
+                                    <span class="list-group-item-text">@set.Text</span>
+                                </li>
+                            }
+
+                            <li class="list-group-item" id="add-set">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="list-group-item-text">增加集</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-9">
+                        <p>
+                            <button class="btn btn-primary btn-sm" id="add-value">增加值</button>
+                        </p>
+                        <table class="table" id="valueList">
+                            <thead>
+                                <tr>
+                                    <th>值</th>
+                                    <th>文本</th>
+                                    <th width="100">排序</th>
+                                    <th width="100">是否启用</th>
+                                    <th width="100">是否默认</th>
+                                    <th width="150">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/html" id="layer-rights">
+    <div class="item item-row">
+        <div class="item-name required">员工：</div>
+        {{if user}}
+            <div class="item-static">{{user}}</div>
+        {{else}}
+            <div class="item-control">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="user-list" readonly>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default selector-organiztion" data-type="multiPeople">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <div class="item item-row">
+        <div class="item-name required">权限：</div>
+        <div class="item-static checkbox-group" id="right-list">
+            <label><input type="checkbox" class="form-contorl" value="权限设置" {{rightList.indexOf('权限设置') > -1 ? ' checked': ''}}> 权限设置</label>
+            <label><input type="checkbox" class="form-contorl" value="值集维护" {{rightList.indexOf('值集维护') > -1 ? ' checked': ''}}> 值集维护</label>
+            <label><input type="checkbox" class="form-contorl" value="日志查询" {{rightList.indexOf('日志查询') > -1 ? ' checked': ''}}> 日志查询</label>
+            <label><input type="checkbox" class="form-contorl" value="指标图"   {{rightList.indexOf('指标图')> -1    ?   ' checked': ''}}> 指标图</label>
+            <label><input type="checkbox" class="form-contorl" value="报表导出" {{rightList.indexOf('报表导出') > -1 ? ' checked': ''}}> 报表导出</label>
+            
+
+
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="Add-Value">
+    <div class="item item-row">
+        <div class="item-name required">值：</div>
+        <div class="item-value"><input type="text" name="Value" class="form-control" value="{{Value}}"></div>
+    </div>
+    <div class="item item-row">
+    <div class="item-name required">文本：</div>
+    <div class="item-value"><input type="text" name="Text" class="form-control" value="{{Text}}"></div>
+    </div>
+    <div class="item item-row">
+        <div class="item-name">扩展说明：</div>
+        <div class="item-value"><textarea name="Extra" id="Extra" class="form-control confirm-info">{{Extra}}</textarea></div>
+    </div>
+    <div class="item item-row">
+    <div class="item-name">排序：</div>
+    <div class="item-value"><input type="text" name="SortId" class="form-control" placeholder="请输入数字" value="{{SortId}}"></div>
+    </div>
+    <div class="item item-row">
+    <div class="item-name">是否启用：</div>
+    <div class="item-static">
+        <label><input type="radio" name="IsEnable" value="1" checked {{IsEnable == "1" ? 'checked' : ''}}> 是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input type="radio" name="IsEnable" value="0" {{IsEnable == "0" ? 'checked' : ''}}> 否</label>
+        </div>
+    </div>
+    <div class="item item-row">
+    <div class="item-name">是否默认：</div>
+    <div class="item-static">
+        <label><input type="radio" name="IsDefault" value="1" {{IsDefault == '1' ? 'checked' : ''}} /> 是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input type="radio" name="IsDefault" value="0" {{IsDefault == '0' ? 'checked' : ''}} /> 否</label>
+        </div>
+    </div>
+</script>
+
+@section scripts {
+    <script>
+        OP_CONFIG.module = 'system';
+        OP_CONFIG.page = 'setting';
+    </script>
+}

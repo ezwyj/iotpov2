@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "审批任务";
+}
+
+<div class="container page-body approveList">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h5>查询条件</h5>
+        </div>
+        <div class="panel-body">
+            <div id="pendList"></div>
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="panel-option">
+                <div class="input-group search-widget">
+                    <div class="input-group-btn dropdown">
+                        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span class="dropdown-select">标题</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="#">标题</a>
+                            </li>
+                            <li>
+                                <a href="#">版本号</a>
+                            </li>
+                            <li>
+                                <a href="#">发起人</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" id="searchHandleList" placeholder="搜索" />
+                </div>
+            </div>
+            <h5>我审批过的文档</h5>
+        </div>
+        <div class="panel-body">
+            <div id="handleList"></div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        OP_CONFIG.module = 'npi';
+        OP_CONFIG.page = 'index';
+    </script>
+}

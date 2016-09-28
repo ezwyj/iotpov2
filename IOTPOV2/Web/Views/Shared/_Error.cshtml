@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "错误提示";
+}
+
+@section styles{
+    <style>
+        .error-table {
+            display: table;
+            width: 100%;
+        }
+
+        .error-table-cell {
+            display: table-cell;
+        }
+
+        .error-img {
+            width: 33.33%;
+            text-align: right;
+        }
+
+        .error-msg {
+            color: #c7254e;
+            padding: 0 30px;
+            vertical-align: middle;
+        }
+        #footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
+}
+
+<div class="container page-body">
+    <div class="error-table">
+        <div class="error-table-cell error-img">
+            <img src="@Url.Content("~/assets/img/error_page.png")" alt="error">
+        </div>
+        <div class="error-table-cell error-msg">
+            <h3>@ViewBag.errorMessage</h3>
+        </div>
+    </div>
+</div>

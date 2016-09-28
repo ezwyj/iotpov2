@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" Content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" Content="IE=edge">
+    <meta name="viewport" Content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>NPI缺陷管理-登录</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/common.css")">
+    <style>
+        body {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #284F70;
+        }
+
+        .login-box {
+            width: 350px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-left: -200px;
+            margin-top: -150px;
+            border-radius: 3px;
+            font-family: 'Helvetica Neue',STHeiti,'Microsoft YaHei',Helvetica,Arial,sans-serif;
+        }
+
+        .login-box .panel {
+            width: 100%;
+            height: 100%;
+            margin-bottom: 0;
+            border-width: 0;
+            box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.4);
+        }
+
+        .login-box .panel-body {
+            padding: 25px 35px;
+        }
+
+        .panel-heading h3 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .login-box .form-row {
+            margin: 10px 0;
+        }
+
+        .login-box .form-control {
+            color: #333;
+            padding-left: 30px;
+        }
+
+        .login-box .user {
+            background: #fff url(../assets/img/user.png) no-repeat 8px center;
+        }
+
+        .login-box .pwd {
+            background: #fff url(../assets/img/locked.png) no-repeat 8px center;
+        }
+
+        .login-box .alert-danger {
+            text-align: center;
+            margin-bottom: 0;
+            padding: 5px;
+        }
+
+        #footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3>NPI缺陷管理</h3>
+            </div>
+            <div class="panel-body">
+                @if (!String.IsNullOrEmpty(ViewBag.errorMsg))
+                {
+                    <div class="alert alert-danger">
+                        @ViewBag.errorMsg
+                    </div>
+                }
+
+                @using (Html.BeginForm())
+                {
+                    <div class="form-row">
+                        <input type="text" name="username" class="form-control user" value="@ViewBag.username" placeholder="用户名" @Html.Raw(string.IsNullOrEmpty(ViewBag.username) ? "autofocus" : "") />
+                    </div>
+                    <div class="form-row">
+                        <input type="password" name="password" class="form-control pwd" placeholder="密码" @Html.Raw(string.IsNullOrEmpty(ViewBag.username) ? "" : "autofocus") />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">登录</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="text-center">Powered by MaiPu ©1993-2016 MaiPu Inc.</p>
+    </div>
+</body>
+</html>

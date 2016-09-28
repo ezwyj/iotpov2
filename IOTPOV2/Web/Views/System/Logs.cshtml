@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "日志查询";
+}
+
+@section styles {
+    <link href="@Url.Content("~/assets/plugins/datepicker/bootstrap-datepicker.min.css")" rel="stylesheet" />
+}
+
+<div class="container page-body system-setting">
+    <div class="panel panel-danger" id="query">
+        <div class="panel-heading">
+            <h5>查询</h5>
+            <div class="panel-option">
+                <button class="btn btn-primary btn-sm" id="searchLog">&nbsp;&nbsp;查询&nbsp;&nbsp;</button>
+                <button class="btn btn-primary btn-sm" id="resetSearch">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
+                <a class="btn btn-info btn-sm" id="exportLog">&nbsp;&nbsp;导出&nbsp;&nbsp;</a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="query-condition">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="item">
+                            <div class="item-name">日志类型：</div>
+                            <div class="item-value">
+                                <select class="form-control" name="Type">
+                                    <option value=""></option>
+                                    <option value="1">操作日志</option>
+                                    <option value="2">系统日志</option>
+                                    <option value="3">错误日志</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item">
+                            <div class="item-name">操作人：</div>
+                            <div class="item-value">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="Operator" readonly>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default selector-organiztion" data-type="singlePeople">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                        <button class="btn btn-default selector-clear">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="item">
+                            <div class="item-name">日期：</div>
+                            <div class="item-value">
+                                <input type="text" name="StartTime" class="form-control datepicker" readonly>
+                                -
+                                <input type="text" name="EndTime" class="form-control datepicker" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="search-result"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        OP_CONFIG.module = 'system';
+        OP_CONFIG.page = 'log';
+    </script>
+}
