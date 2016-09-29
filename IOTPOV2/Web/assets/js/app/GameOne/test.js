@@ -110,7 +110,7 @@
     })
 
     $('#SendPicture2').on('click', function () {
-        var count=100; //90份扇形
+        var count=100; //100份扇形
         var angle = 0; //当前取数据角度
         var angleStep = 360 / count; //每步度数
         var context = pmvas.getContext('2d');
