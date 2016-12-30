@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Common</RootNamespace>
     <AssemblyName>Common</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DogNet.Common">
@@ -36,11 +39,9 @@
     <Reference Include="DogNet.Repositories">
       <HintPath>..\Web\REF\DogNet.Repositories.dll</HintPath>
     </Reference>
-    <Reference Include="MPService.Common.Operation">
-      <HintPath>..\Web\REF\MPService.Common.Operation.dll</HintPath>
-    </Reference>
-    <Reference Include="MPService.Contract.Mail">
-      <HintPath>..\Web\REF\MPService.Contract.Mail.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PetaPoco, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6235298024de30d5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -60,11 +61,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\AttachmentEntity.cs" />
-    <Compile Include="Entity\PicturePixel.cs" />
+    <Compile Include="Entity\Client.cs" />
+    <Compile Include="Entity\PovDevice.cs" />
+    <Compile Include="Service\CommonService.cs" />
     <Compile Include="Util\FileHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Serializer.cs" />
     <Compile Include="Util\Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

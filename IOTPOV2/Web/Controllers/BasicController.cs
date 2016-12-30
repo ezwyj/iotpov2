@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Web.Controllers
 {
-    public class GameOneController : Controller
+    public class BasicController : Controller
     {
         //
         // GET: /GameOne/

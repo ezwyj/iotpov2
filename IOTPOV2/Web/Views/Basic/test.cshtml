@@ -3,9 +3,11 @@
 }
 
 <h2>test</h2>
+
+
 <div style="height:200px" >
     <img id="previewIMG" src="#">
-    <input type="file" id="file_input" value="选择图片" /> 
+    <input type="file" id="file_input" value="选择图片" style="display:none;" /> 
 </div>
 <br />
 <br />
@@ -17,17 +19,20 @@
 </div>
   
 <div>
-
-    <button class="btn btn-sm btn-info" id="SendPicture">发送图片</button>
-    <button class="btn btn-sm btn-info" id="SendPicture2">发送图片2</button>
-    <button class="btn btn-sm btn-info" id="ChangePicture">切换图</button>
+    <button class="btn btn-sm btn-info" id="SelectPicture">选择</button>
+    <button class="btn btn-sm btn-info" id="SendPicture">发送</button>
+    <button class="btn btn-sm btn-info" id="ChangePicture">切换</button>
 </div>
 
 
 
 @section scripts {
     <script>
-        OP_CONFIG.module = 'gameOne';
+        OP_CONFIG.module = 'Basic';
         OP_CONFIG.page = 'test';
     </script>
+    
+}
+@section styles {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/component.css")" /> 
 }

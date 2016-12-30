@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Account", "Account\Account.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{CD688199-38C6-41B3-A3F3-A84F952BB6A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOneCore", "GameOneCore\GameOneCore.csproj", "{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{02E6B284-EB4E-4815-8069-EC37E65938A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Right", "Right\Right.csproj", "{E38CFF14-4399-4A56-A361-079C5FF1AEE2}"
@@ -59,16 +57,6 @@ Global
 		{CD688199-38C6-41B3-A3F3-A84F952BB6A2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CD688199-38C6-41B3-A3F3-A84F952BB6A2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CD688199-38C6-41B3-A3F3-A84F952BB6A2}.Release|Win32.ActiveCfg = Release|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{A469DCBA-F23A-4A6A-8309-82973F2ED9C6}.Release|Win32.ActiveCfg = Release|Any CPU
 		{02E6B284-EB4E-4815-8069-EC37E65938A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02E6B284-EB4E-4815-8069-EC37E65938A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02E6B284-EB4E-4815-8069-EC37E65938A3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

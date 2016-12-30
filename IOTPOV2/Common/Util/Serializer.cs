@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 namespace Common.Util
 {
@@ -12,23 +14,18 @@ namespace Common.Util
     {
         public static string ToJson<T>(T obj)
         {
-            System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            var str = serializer.Serialize(obj); ;
-            str = Regex.Replace(str, @"\\/Date\((\d+)\)\\/", match =>
-            {
-                DateTime dt = new DateTime(1970, 1, 1);
-                dt = dt.AddMilliseconds(long.Parse(match.Groups[1].Value));
-                dt = dt.ToLocalTime();
-                return dt.ToString("yyyy-MM-dd HH:mm:ss");
-            });
+            string str = JsonConvert.SerializeObject(obj);
 
             return str;
         }
 
         public static T ToObject<T>(string json)
         {
-            System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            T obj = serializer.Deserialize<T>(json);
+
+
+            T obj = JsonConvert.DeserializeObject<T>(json);
+
+
             return obj;
         }
     }

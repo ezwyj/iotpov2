@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Web</RootNamespace>
     <AssemblyName>Web</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -44,13 +44,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Words, Version=6.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Ref\Aspose.Words.dll</HintPath>
-    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Ref\DocumentFormat.OpenXml.dll</HintPath>
+      <HintPath>..\..\..\..\maipu_code\Code\Helin\OnlineIssue\REF\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="DogNet.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -64,13 +60,11 @@
       <HintPath>Ref\DogNet.Repositories.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MPService.Common.Operation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Ref\MPService.Common.Operation.dll</HintPath>
+    <Reference Include="Senparc.Weixin.MP">
+      <HintPath>..\..\..\..\TEMP_CODE\FancyAudioManage\AudioManage\Web\REF\Senparc.Weixin.MP.dll</HintPath>
     </Reference>
-    <Reference Include="MPService.Contract.Mail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Ref\MPService.Contract.Mail.dll</HintPath>
+    <Reference Include="Senparc.Weixin.MP.MvcExtension">
+      <HintPath>..\..\..\..\TEMP_CODE\FancyAudioManage\AudioManage\Web\REF\Senparc.Weixin.MP.MvcExtension.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -94,10 +88,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -147,7 +137,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
-    <Compile Include="Controllers\GameOneController.cs" />
+    <Compile Include="Controllers\CoreController.cs" />
+    <Compile Include="Controllers\BasicController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
@@ -201,8 +192,8 @@
     <Content Include="assets\img\tn-icon-file.png" />
     <Content Include="assets\img\upload_btn.png" />
     <Content Include="assets\img\user.png" />
-    <Content Include="assets\js\app\GameOne\Index.js" />
-    <Content Include="assets\js\app\GameOne\test.js" />
+    <Content Include="assets\js\app\Basic\Index.js" />
+    <Content Include="assets\js\app\Basic\test.js" />
     <Content Include="assets\js\app\npi\approveList.js" />
     <Content Include="assets\js\app\npi\detail.js" />
     <Content Include="assets\js\app\npi\index.js" />
@@ -310,7 +301,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\System\Logs.cshtml" />
     <Content Include="Views\System\Setting.cshtml" />
-    <Content Include="Views\GameOne\Index.cshtml" />
+    <Content Include="Views\Basic\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -350,7 +341,7 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\aliyun.pubxml" />
     <None Include="Properties\PublishProfiles\pov_public.pubxml" />
-    <Content Include="Views\GameOne\test.cshtml" />
+    <Content Include="Views\Basic\test.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

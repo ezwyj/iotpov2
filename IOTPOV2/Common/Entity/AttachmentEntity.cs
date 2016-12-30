@@ -8,7 +8,7 @@ using PetaPoco;
 
 namespace Common.Entity
 {
-    [RepositoryEntity(DefaultConnName = "Common")]
+    [RepositoryEntity(DefaultConnName = "POV")]
     [PetaPoco.TableName("Common_attachment")]
     [PetaPoco.PrimaryKey("Id")]
     public class AttachmentEntity : Repository<AttachmentEntity>
