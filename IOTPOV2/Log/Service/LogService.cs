@@ -16,7 +16,7 @@ namespace Log.Service
             LogEntity log = new LogEntity
             {
                 Type = logType,
-                Operator = HttpContext.Current.User.Identity.Name,
+                Operator = operateModule,
                 OperateModule = operateModule,
                 OperateTime = DateTime.Now,
                 Msg = logContent

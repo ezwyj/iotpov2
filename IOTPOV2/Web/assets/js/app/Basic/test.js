@@ -51,14 +51,14 @@
     var hostname = 'chengdu_pov.mqtt.iot.gz.baidubce.com'
 
     // Create a client instance
-    client = new Paho.MQTT.Client(hostname, Number(8884), "sdfadsfdasclientId");
+    client = new Paho.MQTT.Client(hostname, Number(8884),"/wss", deciceClientId);
     
     // set callback handlers
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
     // connect the client
-    client.connect({ onSuccess: onConnect,useSSL:true });
+    client.connect({ onSuccess: onConnect,useSSL:true ,userName:username,password:password});
 
 
     // called when the client connects
@@ -75,12 +75,18 @@
         if (responseObject.errorCode !== 0) {
             console.log("onConnectionLost:" + responseObject.errorMessage);
         }
+        
     }
 
     // called when a message arrives
     function onMessageArrived(message) {
         console.log("onMessageArrived:" + message.payloadString);
-        
+        if (message.destinationName == 'State') {
+
+        }
+        if (message.destinationName == 'Content') {
+
+        }
 
     }
 
@@ -138,6 +144,7 @@
             alert(err.message);
             console.log(err.message);
             
+
         }
 
 

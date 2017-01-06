@@ -9,8 +9,8 @@ using Account.Service;
 
 namespace Log.Entity
 {
-    [RepositoryEntity(DefaultConnName = "Log")]
-    [PetaPoco.TableName("Log_log")]
+    [RepositoryEntity(DefaultConnName = "POV")]
+    [PetaPoco.TableName("Log")]
     [PetaPoco.PrimaryKey("Id")]
     public class LogEntity : Repository<LogEntity>
     {
@@ -30,16 +30,7 @@ namespace Log.Entity
             }
         }
 
-        [PetaPoco.Ignore]
-        public string OperatorExp
-        {
-            get
-            {
-                UserEntity user = UserEntity.GetSingle(Operator);
-
-                return user != null ? user.Name : "";
-            }
-        }
+        
 
         [PetaPoco.Ignore]
         public string OperateTimeExp

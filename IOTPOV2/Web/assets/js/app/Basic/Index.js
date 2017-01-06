@@ -102,9 +102,9 @@
     });
 
 
-    var username = 'weixinpov_server/chengdu01';
-    var password = 'dgpg0mjLZLyA6i9cxgTyJrvg3idYZW9ngo+oE7oFD98=';
-    var hostname = 'wss://weixinpov_server.mqtt.iot.gz.baidubce.com:8884';
+    var username = 'chengdu_pov/testdevice';
+    var password = 'nd2J/DGjNcYL3kDN1yy8GxxTmKJ0QdLuJIpTu3FFoYA=';
+    var hostname = 'chengdu_pov.mqtt.iot.gz.baidubce.com'
 
     var mqtt = require('mqtt');
     var client  = mqtt.connect(hostname,{
