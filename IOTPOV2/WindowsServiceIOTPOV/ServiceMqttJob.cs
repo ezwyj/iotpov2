@@ -1,16 +1,15 @@
-﻿using Quartz;
+﻿using Common.Entity;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
-using Common.Entity;
 
-namespace Web
+namespace WindowsServiceIOTPOV
 {
     public class ServiceMqttJob : IJob
     {
@@ -25,8 +24,8 @@ namespace Web
         }
         static void writeReport(string msg)
         {
-            var reportDirectory = string.Format("~/reports/{0}/", DateTime.Now.ToString("yyyy-MM"));
-            reportDirectory = System.Web.Hosting.HostingEnvironment.MapPath(reportDirectory);
+            var reportDirectory = string.Format("/reports/{0}/", DateTime.Now.ToString("yyyy-MM"));
+            reportDirectory = AppDomain.CurrentDomain.BaseDirectory + reportDirectory;
             if (!Directory.Exists(reportDirectory))
             {
                 Directory.CreateDirectory(reportDirectory);
@@ -37,26 +36,27 @@ namespace Web
 
         }
 
-        static void  client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
+        static void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
-            
+
         }
         public void Execute(IJobExecutionContext context)
         {
             try
             {
                 string clientId = Guid.NewGuid().ToString();
-                foreach(var device in povDevices){
-                    var sendDevice  = Client.GetListByProperty(a => a.TargetPovID, device.Id).FindAll(b =>b.IsPay==true).FindAll(c => c.IsPlay == false).FirstOrDefault();
-                    client.Connect(clientId );
+                foreach (var device in povDevices)
+                {
+                    var sendDevice = Client.GetListByProperty(a => a.TargetPovID, device.Id).FindAll(b => b.IsPay == true).FindAll(c => c.IsPlay == false).FirstOrDefault();
+                    client.Connect(clientId);
                     ushort i = client.Publish("Device001_Content", Encoding.UTF8.GetBytes("device01" + DateTime.Now.ToString()), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
                 }
-                
-                
-                
-                
+
+
+
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 writeReport(e.Message);
             }

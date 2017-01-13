@@ -21,7 +21,7 @@ namespace Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            JobScheduler.Start();
+            
            
         }
         void Session_End(object sender, EventArgs e)
