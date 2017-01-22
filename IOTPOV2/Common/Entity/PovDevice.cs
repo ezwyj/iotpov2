@@ -1,4 +1,5 @@
 ﻿using DogNet.Repositories;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,19 @@ namespace Common.Entity
         public string State { get; set; }
 
         public string DeviceName { get; set; }
+
+        private bool connected = false;
+        [Ignore]
+        public bool Connected { 
+            get 
+            {
+                return connected;
+            }
+            set
+            {
+                connected = value;
+            }
+        }
 
     }
 }

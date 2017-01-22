@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PetaPoco;
 
 namespace Common.Entity
 {
@@ -13,7 +14,7 @@ namespace Common.Entity
     {
         public int Id { get; set; }
         public string WeixinOpenId { get; set; }
-        public string TargetPovID { get; set; }
+        public int TargetPovID { get; set; }
         public long ShowTime { get; set; }
         public bool IsPay { get; set; }
 
@@ -28,5 +29,12 @@ namespace Common.Entity
         public DateTime PlayEndTime { get; set; }
 
         public string Image { get; set; }
+
+        [Ignore]
+        public PovDevice Device
+        {
+            get { return PovDevice.GetSingle(TargetPovID); }
+        }
+
     }
 }

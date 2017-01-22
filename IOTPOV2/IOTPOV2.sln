@@ -17,7 +17,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueSet", "ValueSet\ValueS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{3230F83B-3BED-4C55-A2E5-AD0FD49CA174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsServiceIOTPOV", "WindowsServiceIOTPOV\WindowsServiceIOTPOV.csproj", "{529409A5-DA6C-4E06-A8EC-8FE31C417681}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageServerService", "MessageServerService\MessageServerService.csproj", "{622211AC-58F4-4B96-AFA4-AA9A77101F97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8207DB97-FA6C-4FCD-8E02-E64767A955C0}"
+	ProjectSection(SolutionItems) = preProject
+		REF\DocumentFormat.OpenXml.dll = REF\DocumentFormat.OpenXml.dll
+		REF\DogNet.Common.dll = REF\DogNet.Common.dll
+		REF\DogNet.Repositories.dll = REF\DogNet.Repositories.dll
+		REF\PetaPoco.dll = REF\PetaPoco.dll
+		REF\ServiceStack.dll = REF\ServiceStack.dll
+		REF\ServiceStack.Interfaces.dll = REF\ServiceStack.Interfaces.dll
+		REF\ServiceStack.ServiceInterface.dll = REF\ServiceStack.ServiceInterface.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,16 +110,16 @@ Global
 		{3230F83B-3BED-4C55-A2E5-AD0FD49CA174}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3230F83B-3BED-4C55-A2E5-AD0FD49CA174}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3230F83B-3BED-4C55-A2E5-AD0FD49CA174}.Release|Win32.ActiveCfg = Release|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Release|Any CPU.Build.0 = Release|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{529409A5-DA6C-4E06-A8EC-8FE31C417681}.Release|Win32.ActiveCfg = Release|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{622211AC-58F4-4B96-AFA4-AA9A77101F97}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
