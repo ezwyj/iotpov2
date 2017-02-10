@@ -22,7 +22,7 @@ namespace Web.Controllers
             try
             {
                 Client entity = Serializer.ToObject<Client>(dataJson);
-                Common.Service.CommonService service = new CommonService();
+                Common.Service.DeviceService service = new DeviceService();
                 state = service.AddBasicImage(povDeviceId,entity);
                 msg = entity.Id.ToString();
             }
@@ -42,7 +42,7 @@ namespace Web.Controllers
             try
             {
                 
-                Common.Service.CommonService service = new CommonService();
+                Common.Service.DeviceService service = new DeviceService();
                 state = service.Pay(clientId,out msg);
                 
             }

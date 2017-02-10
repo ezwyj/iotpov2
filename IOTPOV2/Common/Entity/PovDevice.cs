@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Common.Entity
 {
-    [RepositoryEntity(DefaultConnName = "POV")]
+    [RepositoryEntity(DefaultConnName = "POVDB")]
     [PetaPoco.TableName("PovDevice")]
     [PetaPoco.PrimaryKey("Id")]
     public class PovDevice :Repository<PovDevice>
@@ -26,6 +26,8 @@ namespace Common.Entity
         public string State { get; set; }
 
         public string DeviceName { get; set; }
+
+        public DateTime CreateTime { get; set; }
 
         private bool connected = false;
         [Ignore]

@@ -70,11 +70,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Senparc.Weixin.MP">
-      <HintPath>..\..\..\..\TEMP_CODE\FancyAudioManage\AudioManage\Web\REF\Senparc.Weixin.MP.dll</HintPath>
+    <Reference Include="Senparc.Weixin">
+      <HintPath>..\packages\Senparc.Weixin.4.9.12\lib\net45\Senparc.Weixin.dll</HintPath>
     </Reference>
-    <Reference Include="Senparc.Weixin.MP.MvcExtension">
-      <HintPath>..\..\..\..\TEMP_CODE\FancyAudioManage\AudioManage\Web\REF\Senparc.Weixin.MP.MvcExtension.dll</HintPath>
+    <Reference Include="Senparc.Weixin.MP">
+      <HintPath>..\packages\Senparc.Weixin.MP.14.3.121\lib\net45\Senparc.Weixin.MP.dll</HintPath>
+    </Reference>
+    <Reference Include="Senparc.Weixin.Open">
+      <HintPath>..\packages\Senparc.Weixin.Open.2.3.7\lib\net45\Senparc.Weixin.Open.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -146,12 +149,14 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\BasicController.cs" />
+    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.min.css" />
@@ -201,6 +206,7 @@
     <Content Include="assets\img\user.png" />
     <Content Include="assets\js\app\Basic\Index.js" />
     <Content Include="assets\js\app\Basic\test.js" />
+    <Content Include="assets\js\app\Demo\Create.js" />
     <Content Include="assets\js\app\npi\approveList.js" />
     <Content Include="assets\js\app\npi\detail.js" />
     <Content Include="assets\js\app\npi\index.js" />
@@ -352,6 +358,7 @@
     <None Include="Properties\PublishProfiles\aliyun.pubxml" />
     <None Include="Properties\PublishProfiles\pov_public.pubxml" />
     <Content Include="Views\Basic\test.cshtml" />
+    <Content Include="Views\DEMO\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

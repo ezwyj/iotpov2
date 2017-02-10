@@ -6,7 +6,7 @@ using Common.Entity;
 
 namespace Common.Service
 {
-    public class CommonService
+    public class DeviceService
     {
         public void AddDevice(PovDevice device,out string msg)
         {
@@ -42,25 +42,6 @@ namespace Common.Service
             }
         }
 
-        public bool AddBasicImage(string povDeviceId,Client entity)
-        {
-            bool Result = false;
-            string msg = string.Empty;
-            //检查完整性
-
-
-
-            entity.Save(out msg);
-            if (string.IsNullOrEmpty(msg))
-            {
-                Result =  true;
-            }
-            return Result;
-        }
-
-        public bool Pay(int clientId,out string msg)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
