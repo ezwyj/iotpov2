@@ -3,10 +3,10 @@
 
     wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: '@Model.JsSdkPackage.AppId', // 必填，公众号的唯一标识
-        timestamp: '@Model.JsSdkPackage.Timestamp', // 必填，生成签名的时间戳
-        nonceStr: '@Model.JsSdkPackage.NonceStr', // 必填，生成签名的随机串
-        signature: '@Model.JsSdkPackage.Signature',// 必填，签名
+        appId: JsSdkPackageAppId, // 必填，公众号的唯一标识
+        timestamp: JsSdkPackageTimestamp, // 必填，生成签名的时间戳
+        nonceStr: JsSdkPackageNonceStr, // 必填，生成签名的随机串
+        signature: JsSdkPackageSignature,// 必填，签名
         jsApiList: [
                 'checkJsApi',
                 'onMenuShareTimeline',
@@ -33,7 +33,7 @@
 
     wx.error(function (res) {
         console.log(res);
-        alert('验证失败');
+        alert(res);
     });
 
     wx.ready(function () {
@@ -42,14 +42,15 @@
             serverId: []
         };
 
-        $('#ImageSelect').on('click', function () {
+        $('#selectImage').on('click', function () {
             wx.chooseImage({
                 success: function (res) {
                     var localIds = res.localIds;
                     $("#img").attr('src', localIds[0]);
-                    syncUpload(localIds, 'img');
+                    //syncUpload(localIds, 'img');
                 }
             });
+
         });
 
         var syncUpload = function (localIds, targetInput) {
@@ -101,87 +102,48 @@
 
     });
 
-
-    var username = 'chengdu_pov/testdevice';
-    var password = 'nd2J/DGjNcYL3kDN1yy8GxxTmKJ0QdLuJIpTu3FFoYA=';
-    var hostname = 'chengdu_pov.mqtt.iot.gz.baidubce.com'
-
-    var mqtt = require('mqtt');
-    var client = mqtt.connect(hostname, {
-        username: username,
-        password: password
-    });
-
-
-    client.on('connect', function () {
-        client.subscribe('OnLine');
-        //        client.publish('OnLine', 'Hello mqtt');
-        client.subscribe('OnLine', function () {
-            client.on('message', function (topic, message, packet) {
-                console.log(topic + ": '" + message);
-            });
-        });
-    });
-
-
     $('#ButtonSend').on('click', function () {
-        for (var x = 0; x < 36; x++) {
-            var sendMessage = "";
-            for (var y = 0; y <= 200; y += 10) {
-                sendMessage = sendMessage + pick(x, y);
-                //var message = x + "_" + y;
-                //console.log(message);
+        var count=100; //100份扇形
+        var angle = 0; //当前取数据角度
+        var angleStep = 360 / count; //每步度数
+        var context = pmvas.getContext('2d');
+        var contextTarget = lmvas.getContext('2d');
+        var c = 0;
 
+        try{
+            for (c = 0; c < count; c++) {
+                var x = 0, y = 0; //X,Y轴
+                var send = "";
+                for (r = 0; r < 20; r++) { //r半径来取
+                    x = 20 + r * Math.cos(angle * Math.PI / 180); //换成X坐标
+                    y = 20 + r * Math.sin(angle * Math.PI / 180); //换成Y坐标
+                    var imageData = context.getImageData(x, y, 1, 1); //取X，Y 指定点的一个像素高宽的数据
+                    red = imageData.data[0]; //红色值 
+                    green = imageData.data[1];  //绿色值 
+                    blue = imageData.data[2]; //蓝色值
+                    hexi = ("0" + parseInt(green, 10).toString(16)).slice(-2) + ("0" + parseInt(red, 10).toString(16)).slice(-2) + ("0" + parseInt(blue, 10).toString(16)).slice(-2);
+                    //组成一个RGB串
+                    send = send + hexi;
+
+                    //console.log(x + "_" + y+":"+red+ ' '+green+' '+blue );
+                    contextTarget.putImageData(imageData, x, y);
+                }
+                angle += angleStep; //角度加一步
+                angle %= 360;
+                var sendResult = ("00" + parseInt(c, 10)).slice(-3) + send;
             }
-            client.publish('OnLine', sendMessage);
+            //console.log(sendResult); //本地打印
+            pmvas = $('#canvas2')[0];
+            context2 = pmvas.getContext('2d');
+        
+            pmvas.width = 40;
+            pmvas.height = 40;
+            context2.drawImage(zfim, 0, 0, 40,40);
         }
-
+        catch (err) {
+            alert(err.message);
+            console.log(err.message);
+       }
     })
-
-    var img = new Image();
-    img.src = rootUrl + '/assets/img/test1.png';
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    img.onload = function () {
-        ctx.drawImage(img, 0, 0, 270, 360);
-        img.style.display = 'none';
-    };
-    var color = document.getElementById('color');
-    function pick(x, y) {
-        var pixel = ctx.getImageData(x, y, 1, 1);
-        var data = pixel.data;
-        var rgba = 'rgba(' + data[0] + ',' + data[1] +
-                   ',' + data[2] + ',' + data[3] + ')';
-        color.style.background = rgba;
-        return RGB2HTML(data[2], data[0], data[1]);
-    }
-
-
-    //function rgbToHex(R, G, B) { return toHex(R) + toHex(G) + toHex(B) }
-    function toHex(n) {
-        n = parseInt(n, 10);
-        if (isNaN(n)) return "00";
-        n = Math.max(0, Math.min(n, 255));
-        return "0123456789ABCDEF".charAt((n - n % 16) / 16)
-             + "0123456789ABCDEF".charAt(n % 16);
-    }
-
-    function padRight(str, lenght) {
-        if (str.length >= lenght)
-            return str;
-        else
-            return padRight(str + "0", lenght);
-    }
-
-    function RGB2HTML(red, green, blue) {
-        var decColor = red + 256 * green + 65536 * blue;
-        return decColor.toString(16);
-    }
-
-    //client.on('message', function (topic, message) {
-    //    // message is Buffer
-
-    //    client.end();
-    //});
 
 });
