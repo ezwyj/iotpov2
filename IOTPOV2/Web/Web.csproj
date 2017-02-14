@@ -361,6 +361,7 @@
     <None Include="Properties\PublishProfiles\pov_public.pubxml" />
     <Content Include="Views\Basic\test.cshtml" />
     <Content Include="Views\DEMO\Create.cshtml" />
+    <Content Include="Views\DEMO\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
