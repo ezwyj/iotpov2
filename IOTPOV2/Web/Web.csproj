@@ -208,7 +208,7 @@
     <Content Include="assets\img\user.png" />
     <Content Include="assets\js\app\Basic\Index.js" />
     <Content Include="assets\js\app\Basic\test.js" />
-    <Content Include="assets\js\app\Demo\Create.js" />
+    <Content Include="assets\js\app\Demo\First.js" />
     <Content Include="assets\js\app\npi\approveList.js" />
     <Content Include="assets\js\app\npi\detail.js" />
     <Content Include="assets\js\app\npi\index.js" />
@@ -360,7 +360,7 @@
     <None Include="Properties\PublishProfiles\aliyun.pubxml" />
     <None Include="Properties\PublishProfiles\pov_public.pubxml" />
     <Content Include="Views\Basic\test.cshtml" />
-    <Content Include="Views\DEMO\Create.cshtml" />
+    <Content Include="Views\DEMO\First.cshtml" />
     <Content Include="Views\DEMO\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
