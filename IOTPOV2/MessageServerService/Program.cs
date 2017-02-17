@@ -28,20 +28,24 @@ namespace MessageServerService
                     {
                         var client = ProtoBuf.Serializer.Deserialize<Common.Model.Client>(memoryStream);
                         Console.WriteLine(client.DeviceName);
-                        
-                        MqttClient mqttClient = new MqttClient("chengdu_pov.mqtt.iot.gz.baidubce.com");
+                        //chengdu_pov.mqtt.iot.gz.baidubce.com
+                        MqttClient mqttClient = new MqttClient("120.25.214.231");
                         try
                         {
 
 
                             string clientId = Guid.NewGuid().ToString();
-                            mqttClient.Connect(clientId, client.BaiDuYunName, client.BaiDuYunPwd);
+                            mqttClient.Connect(clientId);//, client.BaiDuYunName, client.BaiDuYunPwd
                             
                                 foreach (var imgString in client.ImageLines)
                                 {
                                     //mqttClient.Publish(client.DeviceName.Trim() + "_Content", Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
-                                    string topic = client.DeviceName.Trim() + "_Content";
-                                    mqttClient.Publish(topic, Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                                    
+                                    string line = imgString.Substring(0, 3);
+                                    string topic = client.DeviceName.Trim() + "_Content"+line;
+                                    string content = imgString.Substring(4);
+                                    Console.WriteLine("Topic:{0},Content:{1}", topic, content);
+                                    mqttClient.Publish(topic, Encoding.UTF8.GetBytes(content), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
                                 }
                             
                                 

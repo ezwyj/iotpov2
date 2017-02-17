@@ -29,7 +29,7 @@ namespace Web.Controllers
     {
         private static string appId = ConfigurationManager.AppSettings["WeixinAppId"];
         private static string secret = ConfigurationManager.AppSettings["WeixinAppSecret"];
-        private static string MQTT_BROKER_ADDRESS = "chengdu_pov.mqtt.iot.gz.baidubce.com";
+
         private static Dictionary<string, PovDevice> povDevices = new Dictionary<string, PovDevice>();
         private static StackExchange.Redis.ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
         public DemoController()
