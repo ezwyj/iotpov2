@@ -39,9 +39,6 @@
     <Reference Include="DogNet.Repositories">
       <HintPath>..\Web\REF\DogNet.Repositories.dll</HintPath>
     </Reference>
-    <Reference Include="M2Mqtt.Net">
-      <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -49,6 +46,9 @@
     <Reference Include="PetaPoco, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6235298024de30d5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Web\REF\PetaPoco.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -68,7 +68,6 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Entity\PovDevice.cs" />
     <Compile Include="Service\DeviceService.cs" />
-    <Compile Include="Model\DisplayMisstion.cs" />
     <Compile Include="Service\IPay.cs" />
     <Compile Include="Service\PayService.cs" />
     <Compile Include="Util\FileHandler.cs" />

@@ -10,6 +10,7 @@ using Senparc.Weixin.MP.AdvancedAPIs.QrCode;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Containers;
 using Senparc.Weixin.MP.Helpers;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,8 +21,7 @@ using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
+
 
 namespace Web.Controllers
 {
@@ -31,15 +31,15 @@ namespace Web.Controllers
         private static string secret = ConfigurationManager.AppSettings["WeixinAppSecret"];
         private static string MQTT_BROKER_ADDRESS = "chengdu_pov.mqtt.iot.gz.baidubce.com";
         private static Dictionary<string, PovDevice> povDevices = new Dictionary<string, PovDevice>();
-
+        private static StackExchange.Redis.ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
         public DemoController()
         {
             var device = PovDevice.GetList();
             foreach (var deviceItem in device)
             {
-                if (!povDevices.ContainsKey(deviceItem.DeviceName))
+                if (!povDevices.ContainsKey(deviceItem.DeviceName.Trim()))
                 {
-                    povDevices.Add(deviceItem.DeviceName, deviceItem);
+                    povDevices.Add(deviceItem.DeviceName.Trim(), deviceItem);
                 }
             }
         }
@@ -83,28 +83,52 @@ namespace Web.Controllers
             msg = "OK";
             return result;
         }
-        /// <summary>
-        /// 介绍使用流程页面
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Index(string deviceName)
-        {
-            ViewData["UrlBase"] = OAuthApi.GetAuthorizeUrl(appId, "http://demo1.deviceiot.top/iot/Demo/Create", deviceName, OAuthScope.snsapi_base);
-            return View();
-        }
-
-       
-
-        public ActionResult First()
+      
+        [HttpGet]
+        public ActionResult First(string deviceName)
         {
             var jsSdkPackage =  JSSDKHelper.GetJsSdkUiPackage(appId, secret, Request.Url.AbsoluteUri);
             ViewBag.JsSdkPackageAppId= jsSdkPackage.AppId;
             ViewBag.JsSdkPackageTimestamp=jsSdkPackage.Timestamp;
             ViewBag.JsSdkPackageNonceStr=jsSdkPackage.NonceStr;
             ViewBag.JsSdkPackageSignature=jsSdkPackage.Signature;
-            return View();
-        }
 
+            Client entity = new Client();
+            entity.DeviceName = deviceName;
+
+            return View(entity);
+        }
+        [HttpPost]
+        public JsonResult FirstPost(string dataJson)
+        {
+            string msg = string.Empty;
+            bool state = true;
+            try
+            {
+                var client = Serializer.ToObject<Client>(dataJson);
+                client.BaiDuYunName = povDevices[client.DeviceName].BaiDuYunName;
+                client.BaiDuYunPwd = povDevices[client.DeviceName].BaiDuYunPwd;
+                ISubscriber redisPublic = redis.GetSubscriber();
+                if (redis.IsConnected)
+                {
+                    using (var memoryStream = new MemoryStream()){
+                        ProtoBuf.Serializer.Serialize<Client>(memoryStream,client);
+                        redisPublic.Publish(client.DeviceName.Trim(), memoryStream.ToArray());
+                    }
+                    
+                }
+
+
+
+
+                return new JsonResult { Data = new { state = state, msg = msg } };
+            }
+            catch (Exception e)
+            {
+
+                return new JsonResult { Data = new { state = state, msg = e.Message } };
+            }
+        }
         public ActionResult Pay()
         {
 
@@ -124,55 +148,7 @@ namespace Web.Controllers
         //
         // 编辑完成，确认发布
 
-        [HttpPost]
-        public ActionResult Create(string dataJson)
-        {
-            string msg=string.Empty;
-            try
-            {
-                var client = Serializer.ToObject<Client>(dataJson);
-
-
-
-                    client.BaiDuYunName = povDevices[client.DeviceName].BaiDuYunName;
-                    client.BaiDuYunPwd = povDevices[client.DeviceName].BaiDuYunPwd;
-                    
-                    MqttClient mqttClient = new MqttClient(MQTT_BROKER_ADDRESS);
-                    try
-                    {
-
-
-                        string clientId = Guid.NewGuid().ToString();
-                        mqttClient.Connect(clientId, client.BaiDuYunName, client.BaiDuYunPwd);
-
-                        foreach (var imgString in client.ImageLines)
-                        {
-                            mqttClient.Publish(client.DeviceName + "_Content", Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
-                        }
-                        client.PlayStartTime = DateTime.Now;
-                        
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-                    finally
-                    {
-                        if (mqttClient.IsConnected)
-                        {
-                            mqttClient.Disconnect();
-                        }
-                    }
-               
-
-                return RedirectToAction("Show");
-            }
-            catch(Exception e)
-            {
-                ViewBag.errMsg = e.Message;
-                return View("");
-            }
-        }
+      
 
         private bool SavePicture(string name, out string msg)
         {

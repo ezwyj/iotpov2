@@ -1,0 +1,28 @@
+﻿
+                MqttClient mqttClient = new MqttClient(MQTT_BROKER_ADDRESS);
+                try
+                {
+
+
+                    string clientId = Guid.NewGuid().ToString();
+                    mqttClient.Connect(clientId, client.BaiDuYunName, client.BaiDuYunPwd);
+
+                    foreach (var imgString in client.ImageLines)
+                    {
+                        mqttClient.Publish(client.DeviceName.Trim() + "_Content", Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                    }
+                    client.PlayStartTime = DateTime.Now;
+
+                }
+                catch (Exception e)
+                {
+                    state = false;
+                    msg = "mqtt error:"+e.Message;
+                }
+                finally
+                {
+                    if (mqttClient.IsConnected)
+                    {
+                        mqttClient.Disconnect();
+                    }
+                }

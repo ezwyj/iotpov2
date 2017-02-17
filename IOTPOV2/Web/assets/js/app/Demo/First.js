@@ -37,83 +37,7 @@
     });
 
     wx.ready(function () {
-        var images = {
-            localId: [],
-            serverId: []
-        };
-
-        $('#selectImage').on('click', function () {
-            wx.chooseImage({
-                success: function (res) {
-                    var localIds = res.localIds;
-                    $("#previewIMG").attr('src', localIds[0]);
-                    var canvas = document.getElementById("canvas");
-                    var ctx = canvas.getContext('2d');
-                    var img = $('#previewIMG')[0]
-                    ctx.drawImage(img, 0, 0, 270, 360);
-                    //syncUpload(localIds, 'img');
-                }
-            });
-
-        });
-
-        $('#SendPicture').on('click', function () {
-            wx.chooseImage({
-                success: function (res) {
-                    var localIds = res.localIds;
-                    $("#previewIMG").attr('src', localIds[0]);
-                    var canvas = document.getElementById("canvas");
-                    var ctx = canvas.getContext('2d');
-                    var img = $('#previewIMG')[0]
-                    ctx.drawImage(img, 0, 0, 270, 360);
-                    //syncUpload(localIds, 'img');
-                }
-            });
-
-        });
-        var getPiexl = function (ctx) {
-                var count = 180; //180份扇页
-                var angle = 0; //当前取数据角度
-                var angleStep = 360 / count; //每步度数
-                var context = ctx;
-                var c = 0;
-
-                try {
-                    for (c = 0; c < count; c++) {
-                        var x = 0, y = 0; //X,Y轴
-                        var send = "";
-                        for (r = 0; r < 20; r++) { //r半径来取
-                            x = 20 + r * Math.cos(angle * Math.PI / 180); //换成X坐标
-                            y = 20 + r * Math.sin(angle * Math.PI / 180); //换成Y坐标
-                            var imageData = context.getImageData(x, y, 1, 1); //取X，Y 指定点的一个像素高宽的数据
-                            red = imageData.data[0]; //红色值 
-                            green = imageData.data[1];  //绿色值 
-                            blue = imageData.data[2]; //蓝色值
-                            hexi = ("0" + parseInt(green, 10).toString(16)).slice(-2) + ("0" + parseInt(red, 10).toString(16)).slice(-2) + ("0" + parseInt(blue, 10).toString(16)).slice(-2);
-                            //组成一个RGB串
-                            send = send + hexi;
-
-                            //console.log(x + "_" + y+":"+red+ ' '+green+' '+blue );
-                            
-                        }
-                        angle += angleStep; //角度加一步
-                        angle %= 360;
-                        var sendResult = ("00" + parseInt(c, 10)).slice(-3) + send;
-                    }
-                    //console.log(sendResult); //本地打印
-                    pmvas = $('#canvas2')[0];
-                    context2 = pmvas.getContext('2d');
-
-                    pmvas.width = 40;
-                    pmvas.height = 40;
-                    context2.drawImage(zfim, 0, 0, 40, 40);
-                }
-                catch (err) {
-                    alert(err.message);
-                    console.log(err.message);
-                }
-            
-        }
+        
 
         var syncUpload = function (localIds, targetInput) {
             var localId = localIds.pop();
@@ -164,6 +88,90 @@
 
     });
 
+    var images = {
+        localId: [],
+        serverId: []
+    };
+
+    $('#selectImage').on('click', function () {
+        //wx.chooseImage({
+        //    success: function (res) {
+        //        var localIds = res.localIds;
+        //        $("#previewIMG").attr('src', localIds[0]);
+        //        var canvas = document.getElementById("canvas");
+        //        var ctx = canvas.getContext('2d');
+        //        var img = $('#previewIMG')[0]
+        //        ctx.drawImage(img, 0, 0, 270, 360);
+        //        //syncUpload(localIds, 'img');
+        //    }
+        //});
+        $("#previewIMG").attr('src', rootUrl + 'assets/img/color3.png');
+        $("#previewIMG").addClass("carousel-inner img-responsive img-rounded");
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext('2d');
+        var img = $('#previewIMG')[0]
+        ctx.drawImage(img, 0, 0, 40, 40);
+        //syncUpload(localIds, 'img');
+    });
+
+    $('#SendPicture').on('click', function () {
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext('2d');
+
+        getPiexl(ctx);
+
+    });
+
+
+
+    var getPiexl = function (ctx) {
+        var count = 180; //180份扇页
+        var angle = 0; //当前取数据角度
+        var angleStep = 360 / count; //每步度数
+        var context = ctx;
+        var c = 0;
+        var imageLines = [];
+        try {
+            for (c = 0; c < count; c++) {
+                var x = 0, y = 0; //X,Y轴
+                var send = "";
+                for (r = 0; r < 20; r++) { //r半径来取
+                    x = 20 + r * Math.cos(angle * Math.PI / 180); //换成X坐标
+                    y = 20 + r * Math.sin(angle * Math.PI / 180); //换成Y坐标
+                    var imageData = context.getImageData(x, y, 1, 1); //取X，Y 指定点的一个像素高宽的数据
+                    red = imageData.data[0]; //红色值 
+                    green = imageData.data[1];  //绿色值 
+                    blue = imageData.data[2]; //蓝色值
+                    hexi = ("0" + parseInt(green, 10).toString(16)).slice(-2) + ("0" + parseInt(red, 10).toString(16)).slice(-2) + ("0" + parseInt(blue, 10).toString(16)).slice(-2);
+                    //组成一个RGB串
+                    send = send + hexi;
+
+                    //console.log(x + "_" + y+":"+red+ ' '+green+' '+blue );
+
+                }
+                angle += angleStep; //角度加一步
+                angle %= 360;
+                var sendResult = ("00" + parseInt(c, 10)).slice(-3) + send;
+                //console.log(sendResult); //本地打印
+                imageLines.push(sendResult);
+            }
+            upModelData.ImageLines = imageLines;
+
+
+            $.post(rootUrl + 'DEMO/FirstPost', {
+                dataJson: JSON.stringify(upModelData)
+            }, function (res) {
+                console.log(res.msg);
+            });
+
+        }
+        catch (err) {
+
+            console.log(err.message);
+        }
+
+    }
     
 
 });
