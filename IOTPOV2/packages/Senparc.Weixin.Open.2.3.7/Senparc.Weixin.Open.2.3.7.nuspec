@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Senparc.Weixin.Open</id>
+    <version>2.3.7</version>
+    <title>Senparc.Weixin.Open.dll</title>
+    <authors>苏震巍</authors>
+    <owners>苏震巍</owners>
+    <licenseUrl>https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md</licenseUrl>
+    <projectUrl>https://github.com/JeffreySu/WeiXinMPSDK</projectUrl>
+    <iconUrl>http://sdk.weixin.senparc.com/Images/Logo.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>微信公众账号SDK：Senparc.Weixin.Open.dll
+开源项目：
+https://github.com/JeffreySu/WeiXinMPSDK</description>
+    <summary />
+    <releaseNotes>v0.2.4 支持所有公众号第三方平台API
+
+v0.2.6 调整命名空间及类的命名方式
+
+v1.3.1 完善一系列API
+
+v1.3.2 添加部分Container及Bag
+
+v1.4.1 重构Container
+
+v1.4.4 fix bug 稳定版
+
+v1.4.11 fix bug 稳定版
+
+v1.5.1 重构
+
+v1.6.3
+重构
+整理Container
+
+v2.1.0
+为借口添加异步方法
+完善接口
+
+v2.1.2
+添加EntityHelper，优化
+
+v2.2.0
+重构缓存策略
+重构Container
+整合分布锁
+
+v2.2.1
+添加TryReRegister()方法，处理分布式缓存重启（丢失）的情况
+
+v2.3.0 优化接口
+v2.3.1 配合Senparc.Weixin v4.9升级
+v2.3.1 为GetAuthorizerInfoResult方法添加authorizerBag.AuthorizationInfo更新
+v2.3.4 
+优化 优化TryGetAuthorizerAccessToken方法，避免authorization_info.authorizer_access_token值为空
+添加 AuthorizerContainer.GetAuthorizationInfoAsync()异步方法
+v2.3.5 OAuthAccessTokenResult添加序列化特性
+v2.3.6 添加SuccessResponseMessage类型响应信息，ResponseMsgType添加SuccessResponse枚举
+v2.3.7 修复：ApiConfirmAuth的URL中带空格</releaseNotes>
+    <copyright>Senparc</copyright>
+    <tags>微信 WeiXin Open 第三方 开放平台 小程序 微信支付</tags>
+    <dependencies>
+      <dependency id="Senparc.Weixin" version="4.9.12" />
+    </dependencies>
+  </metadata>
+</package>
