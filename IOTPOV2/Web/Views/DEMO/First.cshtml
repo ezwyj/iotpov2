@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "上传图片";
+}
+
+<h2></h2>
+<img id="previewIMG" src="#" >
+
+
+
+<button class="btn btn-sm btn-info" id="selectImage">选择图片</button>
+<button class="btn btn-sm btn-info" id="SendPicture">发送图片</button>
+
+----------------------------------------------------------------
+<canvas id="canvas"  ></canvas>
+
+@section scripts {
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+    OP_CONFIG.module = 'Demo';
+    OP_CONFIG.page = 'First';
+    JsSdkPackageAppId = '@ViewBag.JsSdkPackageAppId';
+    JsSdkPackageTimestamp = '@ViewBag.JsSdkPackageTimestamp';
+    JsSdkPackageNonceStr = '@ViewBag.JsSdkPackageNonceStr';
+    JsSdkPackageSignature = '@ViewBag.JsSdkPackageSignature';
+    upModelData = @Html.Raw(Common.Util.Serializer.ToJson<Common.Model.Client>(Model));
+    </script>
+
+}

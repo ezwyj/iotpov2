@@ -1,5 +1,5 @@
 #include <Adafruit_DotStar.h>
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 #include <PubSubClient.h>
 #include <SPI.h> 
 
