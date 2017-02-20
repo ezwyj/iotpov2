@@ -95,6 +95,7 @@ namespace Web.Controllers
 
             Client entity = new Client();
             entity.DeviceName = deviceName;
+            entity.City = "Chengdu";
 
             return View(entity);
         }
@@ -106,8 +107,6 @@ namespace Web.Controllers
             try
             {
                 var client = Serializer.ToObject<Client>(dataJson);
-                client.BaiDuYunName = povDevices[client.DeviceName].BaiDuYunName;
-                client.BaiDuYunPwd = povDevices[client.DeviceName].BaiDuYunPwd;
                 ISubscriber redisPublic = redis.GetSubscriber();
                 if (redis.IsConnected)
                 {
@@ -128,6 +127,7 @@ namespace Web.Controllers
 
                 return new JsonResult { Data = new { state = state, msg = e.Message } };
             }
+
         }
         public ActionResult Pay()
         {

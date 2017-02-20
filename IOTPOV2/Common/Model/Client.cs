@@ -28,10 +28,8 @@ namespace Common.Model
         [ProtoMember(8)]
         public string DeviceName { get; set; }
         [ProtoMember(9)]
-        public string BaiDuYunName { get; set; }
+        public string City { get; set; }
         [ProtoMember(10)]
-        public string BaiDuYunPwd { get; set; }
-        [ProtoMember(11)]
         public List<string> ImageLines { get; set; }
      
 

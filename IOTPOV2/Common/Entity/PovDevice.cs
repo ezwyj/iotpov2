@@ -20,9 +20,6 @@ namespace Common.Entity
 
         public string Address { get; set; }
 
-        public string BaiDuYunName { get; set; }
-        public string BaiDuYunPwd { get; set; }
-
         public string State { get; set; }
 
         public string DeviceName { get; set; }
