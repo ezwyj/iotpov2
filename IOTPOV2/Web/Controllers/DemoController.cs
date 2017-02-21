@@ -99,6 +99,31 @@ namespace Web.Controllers
 
             return View(entity);
         }
+        public JsonResult GetPictureUrl(string media_id)
+        {
+            bool state = false;
+            string msg = string.Empty;
+            try
+            {
+
+                state = SavePicture(media_id, out msg);
+                if (state)
+                {
+                    string url = "Upload/" + DateTime.Now.ToString("yyyyMMdd");
+                    return new JsonResult { Data = new { state = "true",url=url+"/"+media_id+".jpg", msg = msg }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = new { state = "false", msg = "save error" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+
+            }
+            catch (Exception e)
+            {
+                msg = e.Message;
+                return new JsonResult { Data = new { state = "false", msg = msg }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
         [HttpPost]
         public JsonResult FirstPost(string dataJson)
         {
@@ -161,10 +186,10 @@ namespace Web.Controllers
                 var accessToken = AccessTokenContainer.TryGetAccessToken(appId, secret);
                 string fileName = name + ".jpg";
                 string savePath = Server.MapPath("~/Upload/") + DateTime.Now.ToString("yyyyMMdd") ;
-                if (System.IO.Directory.Exists(Server.MapPath(savePath)) == false)//如果不存在就创建file文件夹
+                if (System.IO.Directory.Exists(savePath) == false)//如果不存在就创建file文件夹
                 {
 
-                    System.IO.Directory.CreateDirectory(Server.MapPath(savePath));
+                    System.IO.Directory.CreateDirectory(savePath);
 
                 }
                

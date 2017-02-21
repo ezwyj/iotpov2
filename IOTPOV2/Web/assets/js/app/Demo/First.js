@@ -33,29 +33,12 @@
 
     wx.error(function (res) {
         console.log(res);
-        alert(res);
     });
 
     wx.ready(function () {
         
 
-        var syncUpload = function (localIds, targetInput) {
-            var localId = localIds.pop();
-
-
-            wx.uploadImage({
-                localId: localId,
-                isShowProgressTips: 1,
-                success: function (res) {
-                    var serverId = res.serverId; // 返回图片的服务器端ID
-                    $("#" + targetInput).data(serverId);
-                    //其他对serverId做处理的代码
-                    //if (localIds.length > 0) {
-                    //    syncUpload(localIds);
-                    //}
-                }
-            });
-        };
+        
 
 
         //转发到朋友圈
@@ -94,31 +77,52 @@
     };
 
     $('#selectImage').on('click', function () {
-        //wx.chooseImage({
-        //    success: function (res) {
-        //        var localIds = res.localIds;
-        //        $("#previewIMG").attr('src', localIds[0]);
-        //        var canvas = document.getElementById("canvas");
-        //        var ctx = canvas.getContext('2d');
-        //        var img = $('#previewIMG')[0]
-        //        ctx.drawImage(img, 0, 0, 270, 360);
-        //        //syncUpload(localIds, 'img');
-        //    }
-        //});
-        $("#previewIMG").attr('src', rootUrl + 'assets/img/color3.png');
-        $("#previewIMG").addClass("carousel-inner img-responsive img-rounded");
+        wx.chooseImage({
+            count:1,
+            success: function (res) {
+                var localIds = res.localIds;
+                if (res.localIds.length == 0) {
+                    alert('请先使用 chooseImage 接口选择图片');
+                    return;
+                }
+                //$("#previewIMG").attr('src', localIds[0]);
+                wx.uploadImage({
+                    localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (res) {
+                        var serverId = res.serverId; // 返回图片的服务器端ID
+                        
+                        $.getJSON(rootUrl + 'DEMO/GetPictureUrl?media_id=' + serverId, function (result) {
+                            $("#previewIMG").attr('src', rootUrl + result.url);
+                            $("#previewIMG").addClass("carousel-inner img-responsive img-rounded");
+                            
+                        });
+                        
+                    }
+                });
+
+            }
+        });
+        //$("#previewIMG").attr('src', rootUrl + 'assets/img/color3.png');
+        //$("#previewIMG").addClass("carousel-inner img-responsive img-rounded");
+
+        //var canvas = document.getElementById("canvas");
+        //var ctx = canvas.getContext('2d');
+        //var img = $('#previewIMG')[0]
+        //ctx.drawImage(img, 0, 0, 40, 40);
+        //syncUpload(localIds, 'img');
+    });
+    $('#previewIMG').load(function () {
 
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
         var img = $('#previewIMG')[0]
         ctx.drawImage(img, 0, 0, 40, 40);
-        //syncUpload(localIds, 'img');
-    });
+        })
 
     $('#SendPicture').on('click', function () {
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
-
         getPiexl(ctx);
 
     });
@@ -157,18 +161,16 @@
                 imageLines.push(sendResult);
             }
             upModelData.ImageLines = imageLines;
-
-
             $.post(rootUrl + 'DEMO/FirstPost', {
                 dataJson: JSON.stringify(upModelData)
             }, function (res) {
                 console.log(res.msg);
+
             });
 
         }
         catch (err) {
 
-            console.log(err.message);
         }
 
     }
