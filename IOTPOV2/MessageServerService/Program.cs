@@ -27,11 +27,14 @@ namespace MessageServerService
                     using (var memoryStream = new MemoryStream(bytes))
                     {
                         var client = ProtoBuf.Serializer.Deserialize<Common.Model.Client>(memoryStream);
+                        client.Times.Add(new KeyValuePair<string, DateTime>("Deserialize",DateTime.Now));
                         Console.WriteLine(client.DeviceName);
                         //chengdu_pov.mqtt.iot.gz.baidubce.com
                         lock (GlobalVariable.PovDevices[client.DeviceName.Trim()])
                         {
                             GlobalVariable.PovDevices[client.DeviceName].ClientMisstion.Enqueue(client);
+
+                            client.Times.Add(new KeyValuePair<string, DateTime>("Enqueue", DateTime.Now));
                             Console.WriteLine("Device {0} ,enqueue ,at {1}",client.DeviceName,DateTime.Now.ToLongTimeString());
                         }
                         
@@ -77,6 +80,7 @@ namespace MessageServerService
             if (povDevice.ClientMisstion.Count > 0)
             {
                 var client = povDevice.ClientMisstion.Dequeue();
+                client.Times.Add(new KeyValuePair<string, DateTime>("Dnqueue", DateTime.Now));
                 Device_Send(client);
             } 
            
@@ -154,7 +158,7 @@ namespace MessageServerService
                     mqttClient.Publish(topic, Encoding.UTF8.GetBytes(content), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
                 }
 
-
+                client.Times.Add(new KeyValuePair<string, DateTime>("Send", DateTime.Now));
 
 
             }
@@ -169,6 +173,10 @@ namespace MessageServerService
                 {
                     mqttClient.Disconnect();
                 }
+            }
+            foreach(var item in client.Times)
+            {
+                Console.WriteLine("event:{0},time: {1}", item.Key.ToString(), item.Value.ToString("yyyy-MM-dd HH:mm:ss.fff"));
             }
         }
     }

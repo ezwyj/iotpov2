@@ -132,6 +132,8 @@ namespace Web.Controllers
             try
             {
                 var client = Serializer.ToObject<Client>(dataJson);
+                client.Times = new List<KeyValuePair<string, DateTime>>();
+                client.Times.Add(new KeyValuePair<string, DateTime>("CreateTime", DateTime.Now));
                 ISubscriber redisPublic = redis.GetSubscriber();
                 if (redis.IsConnected)
                 {

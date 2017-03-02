@@ -59,6 +59,10 @@ namespace Common.Entity
         public PovDevice()
         {
             ClientMisstion = new Queue<Model.Client>();
+            
         }
+
+       
+
     }
 }

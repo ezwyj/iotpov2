@@ -31,7 +31,8 @@ namespace Common.Model
         public string City { get; set; }
         [ProtoMember(10)]
         public List<string> ImageLines { get; set; }
-     
 
+        [ProtoMember(11)]
+        public List<KeyValuePair<string, DateTime>> Times { get; set; }
     }
 }
