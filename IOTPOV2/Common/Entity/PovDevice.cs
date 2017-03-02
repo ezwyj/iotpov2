@@ -38,6 +38,27 @@ namespace Common.Entity
                 connected = value;
             }
         }
+        private string workstate = "off";
+        [Ignore]
+        public string WorkState
+        {
+            get
+            {
+                return workstate;
+            }
+            set
+            {
+                workstate = value;
+            }
+        }
+        [Ignore]
+        public Queue<Common.Model.Client> ClientMisstion { get; set; }
 
+        
+        
+        public PovDevice()
+        {
+            ClientMisstion = new Queue<Model.Client>();
+        }
     }
 }

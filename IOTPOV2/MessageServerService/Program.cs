@@ -29,41 +29,12 @@ namespace MessageServerService
                         var client = ProtoBuf.Serializer.Deserialize<Common.Model.Client>(memoryStream);
                         Console.WriteLine(client.DeviceName);
                         //chengdu_pov.mqtt.iot.gz.baidubce.com
-                        MqttClient mqttClient = new MqttClient("120.25.214.231");
-                        try
+                        lock (GlobalVariable.PovDevices[client.DeviceName.Trim()])
                         {
-
-
-                            string clientId = Guid.NewGuid().ToString();
-                            mqttClient.Connect(clientId);//, client.BaiDuYunName, client.BaiDuYunPwd
-                            
-                                foreach (var imgString in client.ImageLines)
-                                {
-                                    //mqttClient.Publish(client.DeviceName.Trim() + "_Content", Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
-                                    
-                                    string line = imgString.Substring(0, 3);
-                                    string topic = client.DeviceName.Trim() + "_Content"+line;
-                                    string content = imgString.Substring(4);
-                                    Console.WriteLine("Topic:{0},Content:{1}", topic, content);
-                                    mqttClient.Publish(topic, Encoding.UTF8.GetBytes(content), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
-                                }
-                            
-                                
-                            
-
+                            GlobalVariable.PovDevices[client.DeviceName].ClientMisstion.Enqueue(client);
+                            Console.WriteLine("Device {0} ,enqueue ,at {1}",client.DeviceName,DateTime.Now.ToLongTimeString());
                         }
-                        catch (Exception e)
-                        {
-                           
-                            Console.WriteLine( "mqtt error:" + e.Message);
-                        }
-                        finally
-                        {
-                            if (mqttClient.IsConnected)
-                            {
-                                mqttClient.Disconnect();
-                            }
-                        }
+                        
 
                     }
                     //Console.WriteLine((string)bytes);
@@ -72,19 +43,62 @@ namespace MessageServerService
 
         }
 
+        static void DeviceListenFromClientDevice(object param)
+        {
+
+            string deviceName = param.ToString();
+            MqttClient mqttClient = new MqttClient("120.25.214.231");
+            mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+            try
+            {
+              
+
+                string clientId = "Server_"+Guid.NewGuid().ToString();
+                mqttClient.Connect(clientId);//, client.BaiDuYunName, client.BaiDuYunPwd
+                mqttClient.Subscribe(new string[] { deviceName + "_WorkState" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+
+
+
+
+            }
+            catch (Exception ee)
+            {
+
+                Console.WriteLine("mqtt error:" + ee.Message);
+            }
+            
+
+        }
+
+        private static void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        {
+            string deviceName = e.Topic.Replace("_WorkState", "");
+            var povDevice = GlobalVariable.PovDevices[deviceName];
+            if (povDevice.ClientMisstion.Count > 0)
+            {
+                var client = povDevice.ClientMisstion.Dequeue();
+                Device_Send(client);
+            } 
+           
+        }
+
         static void Main(string[] args)
         {
             //取初始数据
-            
+            GlobalVariable.PovDevices = new Dictionary<string, PovDevice>();
 
             
-            List<PovDevice> povDevices = PovDevice.GetList();
-            for (int i = 0; i < povDevices.Count; i++)
+            var devices = PovDevice.GetList();
+            foreach(var device in devices)
             {
-                string deviceName = povDevices[i].DeviceName;
+                string deviceName = device.DeviceName.Trim();
+                GlobalVariable.PovDevices.Add(deviceName, device);
                 var task = new Task(DeviceListen,deviceName);
                 task.Start();
+                var taskDeviceListen = new Task(DeviceListenFromClientDevice, deviceName);
+                taskDeviceListen.Start();
             }
+           
             Console.ReadLine();
             //while(1==1)
             //{
@@ -117,6 +131,45 @@ namespace MessageServerService
             //    }
             //}
 
+        }
+
+        private static void Device_Send(Common.Model.Client client)
+        {
+            MqttClient mqttClient = new MqttClient("120.25.214.231");
+            try
+            {
+                
+
+                string clientId = Guid.NewGuid().ToString();
+                mqttClient.Connect(clientId);//, client.BaiDuYunName, client.BaiDuYunPwd
+
+                foreach (var imgString in client.ImageLines)
+                {
+                    //mqttClient.Publish(client.DeviceName.Trim() + "_Content", Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+
+                    string line = imgString.Substring(0, 3);
+                    string topic = client.DeviceName.Trim() + "_Content" + line;
+                    string content = imgString.Substring(4);
+                    Console.WriteLine("Topic:{0},Content:{1}", topic, content);
+                    mqttClient.Publish(topic, Encoding.UTF8.GetBytes(content), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+                }
+
+
+
+
+            }
+            catch (Exception ee)
+            {
+
+                Console.WriteLine("mqtt error:" + ee.Message);
+            }
+            finally
+            {
+                if (mqttClient.IsConnected)
+                {
+                    mqttClient.Disconnect();
+                }
+            }
         }
     }
 }
