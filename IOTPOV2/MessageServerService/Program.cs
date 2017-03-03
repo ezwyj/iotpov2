@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -73,25 +74,44 @@ namespace MessageServerService
 
         private static void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
+            string msg = string.Empty;
             string deviceName = e.Topic.Replace("_WorkState", "");
-            string msg = "";
             var povDevice = GlobalVariable.PovDevices[deviceName];
-            if (povDevice.ClientMisstion.Count > 0)
+            switch (e.Message.ToString().ToLower())
             {
-                var client = povDevice.ClientMisstion.Dequeue();
-                ClientService dbService = new ClientService();
+                case "next":
+                    #region 开放一个新的播放
+                    
+                    if (povDevice.ClientMisstion.Count > 0)
+                    {
+                        var client = povDevice.ClientMisstion.Dequeue();
+                        ClientService dbService = new ClientService();
 
-                bool ret = dbService.UpdateClient(client, out msg);
-                if (!ret)
-                {
-                    Console.WriteLine(msg);
-                }
-                else
-                {
+                        bool ret = dbService.UpdateClient(client, out msg);
+                        if (!ret)
+                        {
+                            Console.WriteLine(msg);
+                        }
+                        else
+                        {
 
-                }
-                Device_Send(client);
-            } 
+                        }
+                        Device_Send(client);
+                    }
+                    else
+                    {
+                        //播放广告
+                    }
+                    #endregion
+                    break;
+                case "online":
+                    povDevice.Connected = true;
+                    break;
+                default:
+                    povDevice.Connected = false;
+                    break;
+            }
+            
             
         }
 
