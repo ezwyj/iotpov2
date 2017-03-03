@@ -1,4 +1,5 @@
 ﻿using Common.Entity;
+using Common.Service;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -73,13 +74,25 @@ namespace MessageServerService
         private static void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             string deviceName = e.Topic.Replace("_WorkState", "");
+            string msg = "";
             var povDevice = GlobalVariable.PovDevices[deviceName];
             if (povDevice.ClientMisstion.Count > 0)
             {
                 var client = povDevice.ClientMisstion.Dequeue();
+                ClientService dbService = new ClientService();
+
+                bool ret = dbService.UpdateClient(client, out msg);
+                if (!ret)
+                {
+                    Console.WriteLine(msg);
+                }
+                else
+                {
+
+                }
                 Device_Send(client);
             } 
-           
+            
         }
 
         static void Main(string[] args)
@@ -135,6 +148,7 @@ namespace MessageServerService
 
         private static void Device_Send(Common.Model.Client client)
         {
+            string msg = "";
             MqttClient mqttClient = new MqttClient("120.25.214.231");
             try
             {
@@ -142,7 +156,7 @@ namespace MessageServerService
 
                 string clientId = Guid.NewGuid().ToString();
                 mqttClient.Connect(clientId);//, client.BaiDuYunName, client.BaiDuYunPwd
-
+                
                 foreach (var imgString in client.ImageLines)
                 {
                     //mqttClient.Publish(client.DeviceName.Trim() + "_Content", Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
@@ -154,7 +168,8 @@ namespace MessageServerService
                     mqttClient.Publish(topic, Encoding.UTF8.GetBytes(content), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
                 }
 
-
+                
+                
 
 
             }

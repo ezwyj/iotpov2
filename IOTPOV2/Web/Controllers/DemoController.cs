@@ -1,5 +1,6 @@
 ﻿using Common.Entity;
 using Common.Model;
+using Common.Service;
 using Common.Util;
 using Senparc.Weixin;
 using Senparc.Weixin.Exceptions;
@@ -132,6 +133,9 @@ namespace Web.Controllers
             try
             {
                 var client = Serializer.ToObject<Client>(dataJson);
+                ClientService dbService = new ClientService();
+                client.Id = dbService.AddClient(client,out msg);
+                
                 ISubscriber redisPublic = redis.GetSubscriber();
                 if (redis.IsConnected)
                 {
@@ -141,8 +145,7 @@ namespace Web.Controllers
                     }
                     
                 }
-
-
+                
 
 
                 return new JsonResult { Data = new { state = state, msg = msg } };

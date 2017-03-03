@@ -91,7 +91,7 @@
                     isShowProgressTips: 1, // 默认为1，显示进度提示
                     success: function (res) {
                         var serverId = res.serverId; // 返回图片的服务器端ID
-                        
+                        upModelData.WeixinImage = serverId;
                         $.getJSON(rootUrl + 'DEMO/GetPictureUrl?media_id=' + serverId, function (result) {
                             $("#previewIMG").attr('src', rootUrl + result.url);
                             $("#previewIMG").addClass("carousel-inner img-responsive img-rounded");
@@ -105,12 +105,8 @@
         });
         //$("#previewIMG").attr('src', rootUrl + 'assets/img/color3.png');
         //$("#previewIMG").addClass("carousel-inner img-responsive img-rounded");
+        //upModelData.WeixinImage = "color3.png";
 
-        //var canvas = document.getElementById("canvas");
-        //var ctx = canvas.getContext('2d');
-        //var img = $('#previewIMG')[0]
-        //ctx.drawImage(img, 0, 0, 40, 40);
-        //syncUpload(localIds, 'img');
     });
     $('#previewIMG').load(function () {
 

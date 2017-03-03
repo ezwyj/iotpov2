@@ -67,6 +67,7 @@
     <Compile Include="Entity\AttachmentEntity.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Entity\PovDevice.cs" />
+    <Compile Include="Service\ClientService.cs" />
     <Compile Include="Service\DeviceService.cs" />
     <Compile Include="Service\IPay.cs" />
     <Compile Include="Service\PayService.cs" />
