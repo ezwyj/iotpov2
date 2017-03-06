@@ -15,6 +15,8 @@ namespace MessageServerService
 {
     class Program
     {
+       
+
         static void DeviceListen(object param)
         {
 
@@ -49,7 +51,7 @@ namespace MessageServerService
         {
 
             string deviceName = param.ToString();
-            MqttClient mqttClient = new MqttClient("120.25.214.231");
+            MqttClient mqttClient = new MqttClient("message.deviceiot.top");
             mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
             try
             {
@@ -65,7 +67,8 @@ namespace MessageServerService
             }
             catch (Exception ee)
             {
-
+                Action<string> log = new Action<string>(WriteErrLog);
+                log(ee.Message + ee.StackTrace);
                 Console.WriteLine("mqtt error:" + ee.Message);
             }
             
@@ -197,6 +200,8 @@ namespace MessageServerService
             {
 
                 Console.WriteLine("mqtt error:" + ee.Message);
+                Action<string> log = new Action<string>(WriteErrLog);
+                log(ee.Message+ee.StackTrace);
             }
             finally
             {
@@ -205,6 +210,18 @@ namespace MessageServerService
                     mqttClient.Disconnect();
                 }
             }
+        }
+
+        private static void WriteErrLog(string t)
+        {
+            FileLog errlog = new FileLog(AppDomain.CurrentDomain.BaseDirectory + @"/log/errLog.txt");
+            errlog.log(t);
+        }
+        public static void WriteRunLog(string t)
+        {
+            FileLog runlog = new FileLog(AppDomain.CurrentDomain.BaseDirectory + @"/log/runLog.txt");
+            runlog.log(t);
+
         }
     }
 }
