@@ -15,7 +15,7 @@ namespace MessageServerService
 {
     class Program
     {
-       
+        static string mqttServerAddress = "message.deviceiot.top";
 
         static void DeviceListen(object param)
         {
@@ -51,7 +51,7 @@ namespace MessageServerService
         {
 
             string deviceName = param.ToString();
-            MqttClient mqttClient = new MqttClient("message.deviceiot.top");
+            MqttClient mqttClient = new MqttClient(mqttServerAddress);
             mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
             try
             {
@@ -172,7 +172,7 @@ namespace MessageServerService
         private static void Device_Send(Common.Model.Client client)
         {
             string msg = "";
-            MqttClient mqttClient = new MqttClient("120.25.214.231");
+            MqttClient mqttClient = new MqttClient(mqttServerAddress);
             try
             {
                 
