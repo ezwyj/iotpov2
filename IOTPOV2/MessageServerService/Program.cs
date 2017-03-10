@@ -192,7 +192,7 @@ namespace MessageServerService
                     //Console.WriteLine("Topic:{0},Content:{1}", topic, imgString);
                     for(int y=0;y<content.Length/6;y++)
                     {
-                        string one = x.ToString().PadLeft(2,'0') + y.ToString().PadLeft(2, '0') + content.Substring(y * 6, 6);
+                        string one = string.Format("{0:X}{1:X}{2}",x,y, content.Substring(y * 6, 6));
                         var i = mqttClient.Publish(topic, Encoding.UTF8.GetBytes(one), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
                         Console.WriteLine("send: x:{0},y:{1},value:{2},msg {3}",x.ToString(),y.ToString(), one,i.ToString());
 
