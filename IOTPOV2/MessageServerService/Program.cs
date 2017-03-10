@@ -80,7 +80,8 @@ namespace MessageServerService
             string msg = string.Empty;
             string deviceName = e.Topic.Replace("_WorkState", "");
             var povDevice = GlobalVariable.PovDevices[deviceName];
-            switch (e.Message.ToString().ToLower())
+            msg = System.Text.Encoding.Default.GetString(e.Message);
+            switch (msg)
             {
                 case "next":
                     #region 开放一个新的播放
@@ -173,22 +174,30 @@ namespace MessageServerService
         {
             string msg = "";
             MqttClient mqttClient = new MqttClient(mqttServerAddress);
+            mqttClient.MqttMsgPublished += MqttClient_MqttMsgPublished;
             try
             {
                 
 
                 string clientId = Guid.NewGuid().ToString();
                 mqttClient.Connect(clientId);//, client.BaiDuYunName, client.BaiDuYunPwd
-                
+                int x = 0;
                 foreach (var imgString in client.ImageLines)
                 {
                     //mqttClient.Publish(client.DeviceName.Trim() + "_Content", Encoding.UTF8.GetBytes(imgString), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
 
                     string line = imgString.Substring(0, 3);
-                    string topic = client.DeviceName.Trim() + "_Content" + line;
-                    string content = imgString.Substring(4);
-                    Console.WriteLine("Topic:{0},Content:{1}", topic, content);
-                    mqttClient.Publish(topic, Encoding.UTF8.GetBytes(content), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+                    string topic = client.DeviceName.Trim() + "_Content" ;
+                    string content = imgString.Substring(3);
+                    //Console.WriteLine("Topic:{0},Content:{1}", topic, imgString);
+                    for(int y=0;y<content.Length/6;y++)
+                    {
+                        string one = content.Substring(y * 6, 6);
+                        var i = mqttClient.Publish(topic, Encoding.UTF8.GetBytes(one), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+                        Console.WriteLine("send: x:{0},y:{1},value:{2},msg {3}",x.ToString(),y.ToString(), one,i.ToString());
+
+                    }
+                    x++;
                 }
 
                 
@@ -203,13 +212,18 @@ namespace MessageServerService
                 Action<string> log = new Action<string>(WriteErrLog);
                 log(ee.Message+ee.StackTrace);
             }
-            finally
-            {
-                if (mqttClient.IsConnected)
-                {
-                    mqttClient.Disconnect();
-                }
-            }
+            //finally
+            //{
+            //    if (mqttClient.IsConnected)
+            //    {
+            //        mqttClient.Disconnect();
+            //    }
+            //}
+        }
+
+        private static void MqttClient_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
+        {
+            Console.WriteLine("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
         }
 
         private static void WriteErrLog(string t)
